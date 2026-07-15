@@ -1,0 +1,82 @@
+---
+import { navigation, siteData } from '../data/site';
+import { withBase } from '../lib/paths';
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => {
+  const resolved = withBase(href);
+
+  if (href === '/') return currentPath === resolved;
+  if (href === '/work/' && currentPath.includes('/projects/')) return true;
+  return currentPath.startsWith(resolved);
+};
+---
+
+<header class="relative z-50 border-b border-line bg-paper/95">
+  <div class="site-container flex h-20 items-center justify-between lg:h-24">
+    <a
+      href={withBase('/')}
+      class="font-display text-[1.65rem] leading-none tracking-[-0.04em] no-underline"
+      aria-label={`${siteData.name} — home`}
+    >
+      {siteData.name}
+    </a>
+
+    <nav aria-label="Primary" class="hidden md:block">
+      <ul class="flex list-none items-center gap-8 p-0 lg:gap-12">
+        {navigation.slice(1).map((item) => (
+          <li>
+            <a
+              href={withBase(item.href)}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              class:list={[
+                'relative py-3 text-[0.7rem] font-semibold uppercase tracking-[0.15em] no-underline after:absolute after:bottom-1 after:left-0 after:h-px after:bg-current after:transition-[width] after:duration-300',
+                isActive(item.href) ? 'after:w-full' : 'after:w-0 hover:after:w-full',
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <details class="mobile-menu relative md:hidden">
+      <summary class="cursor-pointer list-none py-3 text-[0.7rem] font-semibold uppercase tracking-[0.15em] marker:hidden">
+        <span class="menu-label">Menu</span>
+        <span class="close-label">Close</span>
+      </summary>
+      <nav
+        aria-label="Mobile primary"
+        class="fixed inset-x-0 top-20 border-y border-line bg-paper px-[var(--site-gutter)] py-7 shadow-none"
+      >
+        <ul class="m-0 list-none p-0">
+          {navigation.map((item, index) => (
+            <li class="border-b border-line last:border-0">
+              <a
+                href={withBase(item.href)}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class="flex items-baseline justify-between py-4 font-display text-[clamp(1.8rem,9vw,3rem)] leading-none tracking-[-0.04em] no-underline"
+              >
+                {item.label}
+                <span class="font-sans text-[0.65rem] tracking-[0.14em]">0{index + 1}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .mobile-menu:not([open]) nav,
+  .mobile-menu:not([open]) .close-label,
+  .mobile-menu[open] .menu-label {
+    display: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

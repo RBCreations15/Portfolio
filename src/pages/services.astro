@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCta from '../components/ContactCta.astro';
+import ServiceBlock from '../components/ServiceBlock.astro';
+import { services } from '../data/services';
+---
+
+<BaseLayout title="Services" description="Creative direction, brand strategy, content, photography, styling, marketing strategy, and website design services.">
+  <header class="site-container pb-20 pt-16 lg:pb-32 lg:pt-24">
+    <div class="grid gap-10 md:grid-cols-12">
+      <div class="md:col-span-9">
+        <p class="eyebrow mb-6 text-clay">Capabilities · 01—07</p>
+        <h1 class="page-title max-w-[14ch]">From creative premise to finished world.</h1>
+      </div>
+      <div class="md:col-span-4 md:col-start-9 md:self-end">
+        <p class="body-large m-0 placeholder-copy">[Placeholder — add a concise, approved description of how you collaborate and where you bring the most value.]</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="site-container pb-[var(--section-space)]" aria-label="Service details">
+    {services.map((service) => (
+      <div id={`service-${service.number}`} class="scroll-mt-8">
+        <ServiceBlock service={service} />
+      </div>
+    ))}
+  </section>
+
+  <section class="bg-paper-deep">
+    <div class="site-container section-space grid gap-10 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <p class="eyebrow m-0 text-clay">Custom packages</p>
+      </div>
+      <div class="md:col-span-8 md:col-start-5">
+        <h2 class="m-0 font-display text-[clamp(3rem,6vw,6rem)] font-normal leading-[0.95] tracking-[-0.05em]">
+          The right shape for the work.
+        </h2>
+        <p class="body-large mt-8 placeholder-copy">[Placeholder — explain that selected services can be combined into a custom creative package after the actual scope, timeline, and needs are understood.]</p>
+        <p class="mt-6 max-w-2xl text-muted">No package details, pricing, timelines, or outcomes are implied in this first version. Those can be added once approved.</p>
+      </div>
+    </div>
+  </section>
+
+  <ContactCta />
+</BaseLayout>

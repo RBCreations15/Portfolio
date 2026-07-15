@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ButtonLink from '../components/ButtonLink.astro';
+import { withBase } from '../lib/paths';
+---
+
+<BaseLayout title="Page not found" description="The requested page could not be found." noindex>
+  <section class="site-container grid min-h-[70svh] items-center py-20">
+    <div class="grid gap-10 md:grid-cols-12 md:items-end">
+      <div class="md:col-span-8">
+        <p class="eyebrow mb-6 text-clay">Error 404</p>
+        <h1 class="page-title">This page stepped out of frame.</h1>
+      </div>
+      <div class="md:col-span-4">
+        <p class="body-large m-0">The address may have changed, or the page may still be taking shape.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <ButtonLink href={withBase('/')}>Return home</ButtonLink>
+          <ButtonLink href={withBase('/work/')} variant="outline">View work</ButtonLink>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

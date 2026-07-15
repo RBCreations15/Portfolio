@@ -1,0 +1,43 @@
+---
+interface Props {
+  label?: string;
+  alt?: string;
+  orientation?: 'landscape' | 'portrait' | 'square' | 'wide';
+  tone?: 'light' | 'dark' | 'clay';
+  eager?: boolean;
+}
+
+const {
+  label = 'Image pending',
+  alt = 'Placeholder for project imagery to be supplied',
+  orientation = 'landscape',
+  tone = 'light',
+  eager = false,
+} = Astro.props;
+const ratios = {
+  landscape: 'aspect-[4/3]',
+  portrait: 'aspect-[3/4]',
+  square: 'aspect-square',
+  wide: 'aspect-[16/8]',
+};
+const tones = {
+  light: 'bg-paper-deep text-ink border-line',
+  dark: 'bg-ink text-paper border-ink',
+  clay: 'bg-clay text-paper border-clay-dark',
+};
+---
+
+<div
+  role="img"
+  aria-label={alt}
+  data-loading={eager ? 'eager' : 'lazy'}
+  class:list={[
+    'relative grid w-full place-items-center overflow-hidden border',
+    ratios[orientation],
+    tones[tone],
+  ]}
+>
+  <div class="absolute inset-5 border border-current opacity-20"></div>
+  <span class="eyebrow relative z-10 max-w-[18rem] px-8 text-center opacity-75">[Placeholder] {label}</span>
+  <span class="absolute bottom-5 left-5 text-[0.58rem] uppercase tracking-[0.12em] opacity-45">Asset pending</span>
+</div>

@@ -1,0 +1,202 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import { withBase } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
+  return projects.map((project, index) => ({
+    params: { id: project.id },
+    props: { project, nextProject: projects[(index + 1) % projects.length] },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  nextProject: CollectionEntry<'projects'>;
+}
+
+const { project, nextProject } = Astro.props;
+const { data } = project;
+---
+
+<BaseLayout title={data.title} description={data.summary} image={data.heroImage}>
+  <header class="site-container pb-12 pt-12 lg:pb-20 lg:pt-20">
+    <a href={withBase('/work/')} class="text-link mb-12">Back to work</a>
+    <div class="grid gap-10 md:grid-cols-12 md:items-end">
+      <div class="md:col-span-9">
+        <div class="mb-6 flex flex-wrap items-center gap-3">
+          <p class="eyebrow m-0 text-clay">{data.categories.join(' · ')}</p>
+          <span class="h-1 w-1 rounded-full bg-line" aria-hidden="true"></span>
+          <p class="eyebrow m-0 text-muted">{data.status.replace('-', ' ')}</p>
+        </div>
+        <h1 class="page-title max-w-[14ch]">{data.title}</h1>
+      </div>
+      <p class="body-large m-0 placeholder-copy md:col-span-4 md:col-start-9">{data.summary}</p>
+    </div>
+  </header>
+
+  <section class="site-container pb-12 lg:pb-20" aria-label="Project hero">
+    {
+      data.heroImage ? (
+        <img src={withBase(data.heroImage)} alt={data.heroAlt ?? ''} width="2000" height="1250" class="aspect-[16/10] w-full object-cover" />
+      ) : (
+        <ImagePlaceholder label={`${data.title} — hero image`} alt={data.heroAlt ?? `Placeholder for ${data.title} hero image`} orientation="wide" tone="dark" eager />
+      )
+    }
+  </section>
+
+  <section class="site-container pb-[var(--section-space)]">
+    <div class="grid gap-10 border-y border-line py-7 md:grid-cols-12">
+      <dl class="m-0 grid grid-cols-2 gap-x-8 gap-y-6 text-sm md:col-span-5">
+        <div><dt class="eyebrow mb-2 text-muted">Project / client</dt><dd class="m-0">{data.client ?? '[Pending]'}</dd></div>
+        <div><dt class="eyebrow mb-2 text-muted">Year</dt><dd class="m-0">{data.year}</dd></div>
+        <div><dt class="eyebrow mb-2 text-muted">Location</dt><dd class="m-0">{data.location ?? '[Pending]'}</dd></div>
+        <div><dt class="eyebrow mb-2 text-muted">Category</dt><dd class="m-0">{data.categories.join(', ')}</dd></div>
+      </dl>
+      <div class="md:col-span-5 md:col-start-8">
+        <h2 class="eyebrow mb-3 text-muted">Services provided</h2>
+        <p class="m-0 text-sm">{data.services.length ? data.services.join(' · ') : '[Services pending confirmation]'}</p>
+      </div>
+    </div>
+  </section>
+
+  {(data.overview || data.challenge) && (
+    <section class="site-container pb-[var(--section-space)]">
+      <div class="grid gap-14 md:grid-cols-12">
+        {data.overview && (
+          <div class="md:col-span-7">
+            <p class="eyebrow mb-5 text-clay">Project overview</p>
+            <p class="m-0 font-display text-[clamp(2.4rem,4vw,4.5rem)] leading-[1.05] tracking-[-0.04em] placeholder-copy">{data.overview}</p>
+          </div>
+        )}
+        {data.challenge && (
+          <div class="md:col-span-4 md:col-start-9 md:self-end">
+            <p class="eyebrow mb-4">The challenge</p>
+            <p class="m-0 text-muted">{data.challenge}</p>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  {(data.approach || data.role || data.deliverables.length > 0) && (
+    <section class="bg-paper-deep">
+      <div class="site-container section-space grid gap-14 md:grid-cols-12">
+        <div class="md:col-span-6">
+          <p class="eyebrow mb-5 text-clay">Creative approach</p>
+          <p class="body-large m-0 placeholder-copy">{data.approach ?? '[Creative approach pending]'}</p>
+        </div>
+        <div class="grid gap-10 md:col-span-5 md:col-start-8 sm:grid-cols-2">
+          {data.role && <div><h2 class="eyebrow mb-4">My role</h2><p class="m-0 text-sm text-muted">{data.role}</p></div>}
+          {data.deliverables.length > 0 && (
+            <div>
+              <h2 class="eyebrow mb-4">Deliverables</h2>
+              <ul class="m-0 list-none space-y-2 p-0 text-sm text-muted">{data.deliverables.map((item) => <li>{item}</li>)}</ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {data.process.length > 0 && (
+    <section class="site-container section-space">
+      <div class="grid gap-10 md:grid-cols-12">
+        <div class="md:col-span-3"><p class="eyebrow m-0 text-clay">Process</p></div>
+        <ol class="m-0 list-none p-0 md:col-span-8 md:col-start-5">
+          {data.process.map((step, index) => (
+            <li class="grid gap-4 border-t border-line py-7 sm:grid-cols-[3rem_1fr]">
+              <span class="eyebrow text-clay">0{index + 1}</span>
+              <div><h2 class="m-0 font-display text-3xl font-normal">{step.title}</h2><p class="mt-3 text-muted">{step.description}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  {data.gallery.length > 0 && (
+    <section class="site-container pb-[var(--section-space)]" aria-labelledby="gallery-title">
+      <h2 id="gallery-title" class="eyebrow mb-6 text-clay">Project gallery</h2>
+      <div class="grid gap-6 md:grid-cols-12">
+        {data.gallery.map((item, index) => (
+          <figure class:list={['reveal m-0', index % 3 === 0 ? 'md:col-span-12' : index % 3 === 1 ? 'md:col-span-7' : 'md:col-span-5 md:pt-24']}>
+            {
+              item.image ? (
+                <img src={withBase(item.image)} alt={item.alt} width="1400" height="1050" loading="lazy" class="w-full object-cover" />
+              ) : (
+                <ImagePlaceholder label={`Gallery image ${index + 1}`} alt={item.alt} orientation={item.orientation} tone={index % 2 === 0 ? 'clay' : 'light'} />
+              )
+            }
+            {item.caption && <figcaption class="mt-3 text-xs text-muted">{item.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {data.videos.length > 0 && (
+    <section class="bg-ink text-paper">
+      <div class="site-container section-space">
+        <p class="eyebrow mb-8 text-paper/50">Moving image</p>
+        <div class="grid gap-8 md:grid-cols-2">
+          {data.videos.map((video) => (
+            <figure class="m-0">
+              {video.url ? <video src={video.url} controls preload="metadata" aria-label={video.title}></video> : <ImagePlaceholder label={video.title} alt={`Video placeholder: ${video.title}`} orientation="landscape" tone="light" />}
+              {video.caption && <figcaption class="mt-3 text-xs text-paper/60">{video.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {data.beforeAfter && (
+    <section class="site-container section-space">
+      <p class="eyebrow mb-8 text-clay">Before & after</p>
+      <div class="grid gap-6 md:grid-cols-2">
+        <figure class="m-0">
+          {data.beforeAfter.beforeImage ? <img src={withBase(data.beforeAfter.beforeImage)} alt={data.beforeAfter.beforeAlt} width="1400" height="1050" loading="lazy" class="aspect-[4/3] w-full object-cover" /> : <ImagePlaceholder label="Before image" alt={data.beforeAfter.beforeAlt} orientation="landscape" tone="light" />}
+          <figcaption class="eyebrow mt-3">Before{!data.beforeAfter.beforeImage && ' · asset pending'}</figcaption>
+        </figure>
+        <figure class="m-0">
+          {data.beforeAfter.afterImage ? <img src={withBase(data.beforeAfter.afterImage)} alt={data.beforeAfter.afterAlt} width="1400" height="1050" loading="lazy" class="aspect-[4/3] w-full object-cover" /> : <ImagePlaceholder label="After image" alt={data.beforeAfter.afterAlt} orientation="landscape" tone="clay" />}
+          <figcaption class="eyebrow mt-3">After{!data.beforeAfter.afterImage && ' · asset pending'}</figcaption>
+        </figure>
+      </div>
+      {data.beforeAfter.note && <p class="mt-5 text-sm text-muted">{data.beforeAfter.note}</p>}
+    </section>
+  )}
+
+  {(data.results.length > 0 || data.credits.length > 0) && (
+    <section class="border-y border-line">
+      <div class="site-container section-space grid gap-14 md:grid-cols-12">
+        {data.results.length > 0 && (
+          <div class="md:col-span-6">
+            <p class="eyebrow mb-5 text-clay">Results</p>
+            <ul class="m-0 list-none p-0">{data.results.map((result) => <li class="border-t border-line py-4 placeholder-copy">{result}</li>)}</ul>
+          </div>
+        )}
+        {data.credits.length > 0 && (
+          <div class="md:col-span-5 md:col-start-8">
+            <p class="eyebrow mb-5 text-clay">Credits</p>
+            <dl class="m-0">{data.credits.map((credit) => <div class="grid grid-cols-2 gap-5 border-t border-line py-4 text-sm"><dt>{credit.role}</dt><dd class="m-0 text-right text-muted">{credit.name}</dd></div>)}</dl>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <nav aria-label="Next project" class="bg-clay text-paper">
+    <a href={withBase(`/projects/${nextProject.id}/`)} class="site-container group block py-16 no-underline lg:py-24">
+      <p class="eyebrow mb-5 text-paper/60">Next project</p>
+      <div class="flex items-end justify-between gap-8">
+        <span class="max-w-[12ch] font-display text-[clamp(3.2rem,8vw,8rem)] leading-[0.9] tracking-[-0.055em]">{nextProject.data.title}</span>
+        <span class="text-4xl transition-transform duration-300 group-hover:translate-x-2" aria-hidden="true">→</span>
+      </div>
+    </a>
+  </nav>
+</BaseLayout>

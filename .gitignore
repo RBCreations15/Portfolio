@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output and framework caches
+.astro/
+.cache/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.vercel/
+build/
+coverage/
+dist/
+out/
+
+# Local environment files (commit an .env.example when variables are introduced)
+.env
+.env.*
+!.env.example
+
+# Logs and debug output
+*.log
+debug.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editors and operating systems
+.DS_Store
+.idea/
+*.swp
+*.swo
+
+# Local tooling
+.eslintcache
+*.tsbuildinfo
+

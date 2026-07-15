@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCta from '../components/ContactCta.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import { services } from '../data/services';
+import { siteData } from '../data/site';
+---
+
+<BaseLayout title="About" description="About the multidisciplinary creative practice, philosophy, capabilities, and experience.">
+  <header class="site-container pb-16 pt-16 lg:pb-24 lg:pt-24">
+    <div class="grid gap-10 md:grid-cols-12">
+      <div class="md:col-span-9">
+        <p class="eyebrow mb-6 text-clay">About · {siteData.name}</p>
+        <h1 class="page-title max-w-[14ch]">A visual thinker with a wide-angle practice.</h1>
+      </div>
+      <p class="body-large m-0 placeholder-copy md:col-span-4 md:col-start-9 md:self-end">[Placeholder — add a warm, specific introduction in your own voice.]</p>
+    </div>
+  </header>
+
+  <section class="site-container pb-[var(--section-space)]">
+    <div class="grid gap-12 md:grid-cols-12 md:items-start">
+      <div class="reveal md:col-span-7">
+        <ImagePlaceholder label="Primary portrait" alt="Placeholder for an approved expressive portrait of the portfolio owner" orientation="portrait" tone="dark" eager />
+      </div>
+      <div class="reveal md:col-span-4 md:col-start-9 md:sticky md:top-8">
+        <p class="eyebrow mb-5 text-clay">Biography</p>
+        <div class="space-y-5 text-lg leading-relaxed placeholder-copy">
+          <p>[Placeholder — add the longer approved biography, including relevant background and how the multidisciplinary practice developed.]</p>
+          <p>[Placeholder — add the human details, influences, or perspective that make this page feel personal rather than résumé-like.]</p>
+        </div>
+        <dl class="mt-10 border-t border-line pt-5 text-sm">
+          <div class="grid grid-cols-2 gap-4 border-b border-line py-3">
+            <dt class="eyebrow">Based</dt><dd class="m-0 text-right text-muted">{siteData.location}</dd>
+          </div>
+          <div class="grid grid-cols-2 gap-4 border-b border-line py-3">
+            <dt class="eyebrow">Available</dt><dd class="m-0 text-right text-muted">{siteData.availability}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-line">
+    <div class="site-container section-space grid gap-12 md:grid-cols-12">
+      <p class="eyebrow m-0 text-clay md:col-span-3">Creative philosophy</p>
+      <div class="md:col-span-8 md:col-start-5">
+        <p class="m-0 font-display text-[clamp(2.7rem,5vw,5.3rem)] leading-[1.02] tracking-[-0.045em] placeholder-copy">[Placeholder — articulate the belief that guides your creative choices, collaborations, and standards for the work.]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-container section-space">
+    <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
+      <div>
+        <p class="eyebrow mb-8 text-clay">Values</p>
+        <ol class="m-0 list-none p-0">
+          {['[Value one pending]', '[Value two pending]', '[Value three pending]', '[Value four pending]'].map((value, index) => (
+            <li class="grid grid-cols-[2rem_1fr] gap-4 border-t border-line py-5">
+              <span class="eyebrow text-clay">0{index + 1}</span>
+              <span class="font-display text-2xl placeholder-copy">{value}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div>
+        <p class="eyebrow mb-8 text-clay">Capabilities & disciplines</p>
+        <ul class="m-0 list-none p-0">
+          {services.map((service) => (
+            <li class="border-t border-line py-4 font-display text-2xl">{service.title}</li>
+          ))}
+        </ul>
+        <div class="mt-12 border-t border-line pt-5">
+          <p class="eyebrow mb-4">Tools</p>
+          <p class="m-0 placeholder-copy">[Placeholder — list only tools, formats, production disciplines, and platforms you genuinely use.]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink text-paper">
+    <div class="site-container section-space grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-4">
+        <p class="eyebrow mb-5 text-paper/50">Experience / selected résumé</p>
+        <h2 class="m-0 font-display text-[clamp(3rem,5vw,5rem)] font-normal leading-none tracking-[-0.05em]">The path so far.</h2>
+      </div>
+      <div class="md:col-span-7 md:col-start-6">
+        {[1, 2, 3].map((item) => (
+          <div class="grid gap-2 border-t border-paper/25 py-6 sm:grid-cols-[7rem_1fr_auto] sm:gap-5">
+            <p class="eyebrow m-0 text-paper/50">[Dates]</p>
+            <div>
+              <h3 class="m-0 font-display text-2xl font-normal">[Role or chapter {item}]</h3>
+              <p class="mt-2 text-sm text-paper/60">[Organization, context, and verified description pending.]</p>
+            </div>
+            <p class="eyebrow m-0 text-paper/50">[Place]</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactCta />
+</BaseLayout>
