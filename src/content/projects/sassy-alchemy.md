@@ -1,31 +1,39 @@
 ---
 title: "Sassy Alchemy"
-client: "[Project or client relationship pending confirmation]"
-year: "[Year pending]"
-location: "[Location pending]"
+client: "Sassy Alchemy"
+year: "Content in progress"
+location: "Details to be added"
 categories:
   - "Creative Direction"
   - "Brand Strategy"
+  - "Website"
+  - "Photography"
 services:
-  - "[Services pending confirmation]"
-status: "placeholder"
+  - "Creative Direction"
+  - "Brand Strategy"
+  - "Website"
+  - "Photography"
+status: "coming-soon"
 featured: true
 order: 1
-summary: "Placeholder — add the approved one-sentence project summary and confirm the scope of work."
+summary: "Case study in progress."
 heroAlt: "Placeholder for approved Sassy Alchemy project imagery"
-overview: "[Placeholder — describe the project context, collaborators, and approved scope.]"
-challenge: "[Placeholder — add the verified creative or business challenge in the client’s own context.]"
-approach: "[Placeholder — explain the creative point of view and decisions once the project story is approved.]"
-role: "[Placeholder — confirm your title, responsibilities, and level of involvement.]"
+overview: "Case study coming soon — project background, scope, and approved imagery will be added after review."
+challenge: "Details to be added once the approved project context is confirmed."
+approach: "Content in progress — this section will hold the creative concept, brand-world direction, and visual storytelling approach."
+role: "Role details pending approval."
 deliverables:
-  - "[Deliverables pending confirmation]"
+  - "Creative Direction"
+  - "Brand Strategy"
+  - "Website"
+  - "Photography"
 process:
-  - title: "Discovery"
-    description: "[Placeholder — add the actual research, briefing, or discovery process.]"
-  - title: "Direction"
-    description: "[Placeholder — add the actual concept and art-direction process.]"
-  - title: "Making"
-    description: "[Placeholder — add the actual production and refinement process.]"
+  - title: "Overview"
+    description: "Content in progress — future notes can outline the project background and goals."
+  - title: "Concept"
+    description: "Content in progress — future notes can explain the visual direction and atmosphere."
+  - title: "Process"
+    description: "Content in progress — future notes can document imagery, website structure, and refinements."
 gallery:
   - alt: "Placeholder for approved Sassy Alchemy landscape project image"
     caption: "[Image caption pending]"
@@ -36,18 +44,9 @@ gallery:
   - alt: "Placeholder for approved Sassy Alchemy detail image"
     caption: "[Image caption pending]"
     orientation: "square"
-videos:
-  - title: "[Project video pending]"
-    caption: "Add an approved hosted video or local optimized file later."
-beforeAfter:
-  beforeAlt: "Placeholder for approved before image"
-  afterAlt: "Placeholder for approved after image"
-  note: "[Placeholder — include this comparison only when accurate source material is available.]"
-results:
-  - "[Verified results pending — do not publish unconfirmed outcomes.]"
-credits:
-  - role: "Creative role"
-    name: "[Credit pending confirmation]"
+videos: []
+results: []
+credits: []
 ---
 
-This case study is a structured placeholder. Replace this note with an approved project narrative when source material is available.
+This case study is in progress. Replace this placeholder with approved project narrative, imagery, results, and credits when source material is available.

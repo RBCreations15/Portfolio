@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import { withBase } from '../lib/paths';
+
+const entries = (await getCollection('archive')).sort((a, b) => a.data.order - b.data.order);
+const categories = ['Photography', 'Places', 'Materials', 'Process', 'Concepts', 'Notes'];
+---
+
+<BaseLayout title="Archive" description="An evolving visual journal of photography stories, travel observations, materials, process, concepts, and notes.">
+  <header class="site-container pb-16 pt-16 lg:pb-24 lg:pt-24">
+    <div class="grid gap-10 md:grid-cols-12 md:items-end">
+      <div class="md:col-span-8">
+        <p class="eyebrow mb-6 text-clay">Archive · Visual Journal</p>
+        <h1 class="page-title max-w-[14ch]">Fragments, studies, notes, and unfinished worlds.</h1>
+      </div>
+      <p class="body-large m-0 text-muted md:col-span-4">An evolving collection of photography stories, travel observations, textures, materials, sketches, contact sheets, moodboards, typography experiments, fictional concepts, styling studies, and process work.</p>
+    </div>
+  </header>
+
+  <section class="site-container pb-12" aria-label="Archive categories">
+    <div class="flex flex-wrap gap-x-6 gap-y-3 border-y border-line py-4">
+      {categories.map((category) => <span class="eyebrow text-muted">{category}</span>)}
+    </div>
+  </section>
+
+  <section class="site-container pb-[var(--section-space)]" aria-labelledby="archive-index-heading">
+    <h2 id="archive-index-heading" class="sr-only">Archive entries</h2>
+    <div class="grid gap-x-8 gap-y-16 md:grid-cols-3">
+      {entries.map((entry, index) => (
+        <article class:list={['reveal', index % 3 === 1 && 'md:pt-20']}>
+          <a href={withBase(`/archive/${entry.id}/`)} class="block no-underline" aria-label={`Open archive entry: ${entry.data.title}`}>
+            <ImagePlaceholder label={entry.data.title} alt={`Placeholder for ${entry.data.title}`} orientation={index % 2 === 0 ? 'portrait' : 'landscape'} tone={entry.data.gallery[0]?.tone ?? 'light'} />
+            <div class="border-b border-line py-5">
+              <p class="eyebrow mb-3 text-muted">{String(index + 1).padStart(2, '0')} · {entry.data.category} · {entry.data.year}</p>
+              <h2 class="m-0 font-display text-3xl font-normal leading-none">{entry.data.title}</h2>
+              <p class="mt-4 text-sm text-muted">{entry.data.summary}</p>
+              <p class="eyebrow mt-5 text-clay">Placeholder material</p>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
