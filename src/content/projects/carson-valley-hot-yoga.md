@@ -1,23 +1,36 @@
 ---
 title: "Carson Valley Hot Yoga"
-client: "[Project or client relationship pending confirmation]"
-year: "[Year pending]"
-location: "[Location pending]"
+client: "Carson Valley Hot Yoga"
+year: "Content in progress"
+location: "Details to be added"
 categories:
-  - "Web Design"
-  - "Brand Strategy"
+  - "Launch Campaign"
+  - "Creative Direction"
+  - "Content"
 services:
-  - "[Services pending confirmation]"
-status: "placeholder"
+  - "Launch Campaign"
+  - "Creative Direction"
+  - "Content"
+status: "coming-soon"
 featured: true
 order: 2
-summary: "Placeholder — add an approved description of the work and your role."
+summary: "Case study in progress."
 heroAlt: "Placeholder for approved Carson Valley Hot Yoga project imagery"
-overview: "[Placeholder — add the confirmed project background and scope.]"
-approach: "[Placeholder — explain the approved design and strategic approach.]"
-role: "[Placeholder — confirm your role and responsibilities.]"
+overview: "Case study coming soon — project overview, campaign direction, and approved assets will be added after review."
+challenge: "Details to be added once the approved project context is confirmed."
+approach: "Content in progress — this section will hold the launch campaign concept, content approach, and visual direction."
+role: "Role details pending approval."
 deliverables:
-  - "[Deliverables pending confirmation]"
+  - "Launch Campaign"
+  - "Creative Direction"
+  - "Content"
+process:
+  - title: "Overview"
+    description: "Content in progress — future notes can outline the launch context and goals."
+  - title: "Direction"
+    description: "Content in progress — future notes can explain the campaign mood and visual language."
+  - title: "Content"
+    description: "Content in progress — future notes can document shoot planning, social assets, and campaign materials."
 gallery:
   - alt: "Placeholder for approved Carson Valley Hot Yoga website image"
     caption: "[Image caption pending]"
@@ -25,9 +38,8 @@ gallery:
   - alt: "Placeholder for approved Carson Valley Hot Yoga brand detail"
     caption: "[Image caption pending]"
     orientation: "portrait"
-results:
-  - "[Verified results pending — no performance claims added.]"
+results: []
 credits: []
 ---
 
-Project narrative pending approved source material.
+This case study is in progress. Replace this placeholder with approved project narrative, imagery, results, and credits when source material is available.

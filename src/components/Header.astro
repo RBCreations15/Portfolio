@@ -12,11 +12,11 @@ const isActive = (href: string) => {
 };
 ---
 
-<header class="relative z-50 border-b border-line bg-paper/95">
+<header class="relative z-50 border-b border-line bg-paper/95 backdrop-blur">
   <div class="site-container flex h-20 items-center justify-between lg:h-24">
     <a
       href={withBase('/')}
-      class="font-display text-[1.65rem] leading-none tracking-[-0.04em] no-underline"
+      class="font-title text-[1.35rem] font-black uppercase leading-none no-underline"
       aria-label={`${siteData.name} — home`}
     >
       {siteData.name}
@@ -24,7 +24,7 @@ const isActive = (href: string) => {
 
     <nav aria-label="Primary" class="hidden md:block">
       <ul class="flex list-none items-center gap-8 p-0 lg:gap-12">
-        {navigation.slice(1).map((item) => (
+        {navigation.map((item) => (
           <li>
             <a
               href={withBase(item.href)}
@@ -42,7 +42,7 @@ const isActive = (href: string) => {
     </nav>
 
     <details class="mobile-menu relative md:hidden">
-      <summary class="cursor-pointer list-none py-3 text-[0.7rem] font-semibold uppercase tracking-[0.15em] marker:hidden">
+      <summary class="cursor-pointer list-none py-3 text-[0.7rem] font-semibold uppercase tracking-[0.15em] marker:hidden" aria-label="Toggle navigation menu">
         <span class="menu-label">Menu</span>
         <span class="close-label">Close</span>
       </summary>

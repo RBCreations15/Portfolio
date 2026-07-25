@@ -1,6 +1,6 @@
-# Creative Portfolio
+# Reese Avery Portfolio
 
-A complete first-version portfolio for a multidisciplinary creative and emerging creative director. The site is intentionally designed as an editorial, image-led creative-studio experience. All missing facts, imagery, biography, contact details, credits, and results are visibly marked as placeholders.
+An editorial Astro portfolio for Reese Avery, built around creative direction, brand worlds, visual storytelling, selected work, services, and an evolving visual archive. Missing personal details, imagery, credits, tools, dates, and project results remain visibly marked for approval.
 
 ## Technology
 
@@ -8,6 +8,7 @@ A complete first-version portfolio for a multidisciplinary creative and emerging
 - TypeScript with Astro's strict configuration
 - Tailwind CSS 4 through its lightweight Vite plugin
 - Astro content collections for reusable Markdown project case studies
+- Astro content collections for archive journal entries
 - CSS transitions and a small Intersection Observer enhancement instead of a heavy animation dependency
 - GitHub Actions for GitHub Pages deployment
 
@@ -50,12 +51,13 @@ public/
     fonts/                        Licensed web font files
 src/
   components/                     Reusable navigation, cards, buttons, media, sections
+  content/archive/                Visual-journal entries for the Archive page
   content/projects/               One Markdown file per case study
   data/site.ts                    Global identity, contact details, and navigation
   data/services.ts                Reusable service information
   layouts/BaseLayout.astro        Shared document shell and SEO metadata
   lib/paths.ts                    Base-path-safe internal URL helper
-  pages/                          Home, work, services, about, contact, 404, projects
+  pages/                          Home, work, about, services, archive, contact, 404, dynamic entries
   styles/global.css               Design tokens and global foundations
   content.config.ts               Typed project content schema
 ```
@@ -66,10 +68,9 @@ The repository-wide development rules and content-integrity policy live in `AGEN
 
 Edit `src/data/site.ts` to replace:
 
-- `[Your Name]`
-- the positioning title and site description
 - email address and Instagram handle
 - location and availability
+- current tools
 - social sharing image reference when one exists
 
 Navigation is also maintained in this file. Keep the bracketed labels until approved values are available so unfinished content remains obvious.
@@ -112,6 +113,17 @@ Optional sections disappear cleanly when their data is omitted or an array is em
 
 To feature a project on the home page, set `featured: true`. Use `order` to control project order.
 
+## Add or edit an archive entry
+
+Archive entries live in `src/content/archive/`. The filename becomes the entry URL:
+
+```text
+src/content/archive/example-study.md
+→ /archive/example-study/
+```
+
+Each entry supports title, category, year, summary, introduction, optional written note, and placeholder gallery items. The current categories are Photography, Places, Materials, Process, Concepts, and Notes.
+
 ## Add images and videos
 
 1. Add optimized, approved assets under `public/media/` using the organization described in `public/media/README.md`.
@@ -139,17 +151,18 @@ Replace only with approved, accurate content. Pay particular attention to biogra
 
 Before publishing, confirm that no unapproved client names, testimonials, statistics, awards, press mentions, or results have been added.
 
-## Connect the inquiry form later
+## Contact page
 
-The form in `src/pages/contact.astro` is an accessible interface only. It intentionally prevents submission and tells visitors that nothing is sent or stored.
+The contact page currently uses a polished email-inquiry layout because GitHub Pages is static and no email address or form service has been approved yet. It does not pretend to submit or store anything.
 
-Practical static-site options include Formspree, Basin, Formspark, or a similar approved provider. Before connecting one:
+To make the email link fully useful, replace the placeholder email in `src/data/site.ts` and update the `mailto:` recipient in `src/pages/contact.astro`.
+
+If a form is needed later, practical static-site options include Formspree, Basin, Formspark, or a similar approved provider. Before connecting one:
 
 1. Review pricing, data handling, retention, spam protection, accessibility, and privacy terms.
 2. Create the endpoint in the chosen service.
 3. Add the real form `action` and `method="POST"` according to that provider's instructions.
-4. Remove the preview-only submit script and notice.
-5. Add success and failure states, spam mitigation, a privacy notice, and end-to-end testing.
+4. Add success and failure states, spam mitigation, a privacy notice, and end-to-end testing.
 
 Do not commit secret keys or insert a pretend endpoint.
 
@@ -173,6 +186,32 @@ On GitHub:
 If the repository itself is named `username.github.io`, add an Actions repository variable named `BASE_PATH` with the value `/`.
 
 Local development defaults to `/` and does not need environment variables. To reproduce a repository subpath locally, run the build with `BASE_PATH=/repository-name`.
+
+## Preview and publish this redesign branch
+
+This redesign is intended to be reviewed from the `editorial-redesign` branch and merged manually only after approval.
+
+```bash
+git checkout editorial-redesign
+npm install
+npm run dev
+```
+
+For a production check that matches the live GitHub Pages subpath:
+
+```bash
+SITE_URL=https://rbcreations15.github.io BASE_PATH=/Portfolio npm run build
+BASE_PATH=/Portfolio npm run check:links
+```
+
+To publish after review:
+
+1. Commit the `editorial-redesign` branch.
+2. Push it to GitHub.
+3. Open a pull request into `main`.
+4. Review the generated preview or local build.
+5. Merge into `main` only when approved.
+6. Confirm the GitHub Pages workflow completes under **Actions**.
 
 ## Add a custom domain later
 

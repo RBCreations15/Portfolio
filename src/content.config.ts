@@ -52,4 +52,23 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+const archive = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/archive' }),
+  schema: z.object({
+    title: z.string(),
+    category: z.enum(['Photography', 'Places', 'Materials', 'Process', 'Concepts', 'Notes']),
+    year: z.string(),
+    order: z.number().int(),
+    summary: z.string(),
+    intro: z.string(),
+    note: z.string().optional(),
+    gallery: z.array(z.object({
+      label: z.string(),
+      alt: z.string(),
+      orientation: z.enum(['landscape', 'portrait', 'square', 'wide']).default('landscape'),
+      tone: z.enum(['light', 'dark', 'clay', 'olive', 'rose', 'tobacco']).default('light'),
+    })).default([]),
+  }),
+});
+
+export const collections = { projects, archive };

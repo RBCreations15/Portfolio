@@ -1,81 +1,42 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import { withBase } from '../lib/paths';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const categories = ['All', 'Creative Direction', 'Brand Strategy', 'UGC', 'Photography', 'Styling', 'Web Design'];
 ---
 
-<BaseLayout title="Work" description="A developing archive of multidisciplinary creative projects and case-study placeholders.">
+<BaseLayout title="Work" description="Editorial project index for Reese Avery, featuring case-study placeholders and an evolving creative archive.">
   <header class="site-container pb-16 pt-16 lg:pb-24 lg:pt-24">
     <div class="grid gap-8 md:grid-cols-12 md:items-end">
       <div class="md:col-span-8">
-        <p class="eyebrow mb-6 text-clay">Selected projects · 01—05</p>
-        <h1 class="page-title">Work, in many forms.</h1>
+        <p class="eyebrow mb-6 text-clay">Work · 01—03</p>
+        <h1 class="page-title">An index of worlds in progress.</h1>
       </div>
-      <div class="md:col-span-4">
-        <p class="body-large m-0 placeholder-copy">[Placeholder — add an approved introduction to the range and intention of your practice.]</p>
-      </div>
+      <p class="body-large m-0 text-muted md:col-span-4">Creative direction, brand strategy, content, photography, and visual studies. No outcomes or project claims are added until approved.</p>
     </div>
   </header>
 
   <section class="site-container pb-[var(--section-space)]" aria-labelledby="project-index-heading">
     <h2 id="project-index-heading" class="sr-only">Project index</h2>
-    <div class="mb-12 border-y border-line py-4 lg:mb-20">
-      <div class="flex flex-wrap gap-x-6 gap-y-3" role="group" aria-label="Filter projects by category">
-        {categories.map((category, index) => (
-          <button
-            type="button"
-            class:list={[
-              'filter-button border-0 bg-transparent p-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-muted underline-offset-8 hover:text-ink hover:underline',
-              index === 0 && 'text-ink underline',
-            ]}
-            data-filter={category}
-            aria-pressed={index === 0 ? 'true' : 'false'}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-      <p id="filter-status" class="sr-only" aria-live="polite"></p>
-    </div>
-
-    <div id="project-grid" class="grid gap-x-8 gap-y-20 md:grid-cols-2 lg:gap-x-12 lg:gap-y-28">
+    <div class="grid gap-10">
       {projects.map((project, index) => (
-        <div class:list={[index % 3 === 1 && 'md:pt-28']}>
-          <ProjectCard project={project} index={index} />
-        </div>
+        <article class="grid gap-6 border-t border-line py-8 md:grid-cols-12 md:items-center">
+          <p class="eyebrow m-0 text-clay md:col-span-1">{String(index + 1).padStart(2, '0')}</p>
+          <a href={withBase(`/projects/${project.id}/`)} class="no-underline md:col-span-4">
+            <h2 class="m-0 font-title text-[clamp(2.6rem,6vw,6rem)] font-black uppercase leading-[0.86]">{project.data.title}</h2>
+          </a>
+          <div class="md:col-span-4">
+            <p class="eyebrow mb-3 text-muted">{project.data.categories.join(' · ')}</p>
+            <p class="m-0 text-muted">{project.data.summary}</p>
+            <p class="eyebrow mt-5 text-clay">{project.data.status.replace('-', ' ')}</p>
+          </div>
+          <a href={withBase(`/projects/${project.id}/`)} class="block no-underline md:col-span-3" aria-label={`Open ${project.data.title}`}>
+            <ImagePlaceholder label={`${project.data.title} index image`} alt={`Placeholder for ${project.data.title} index image`} orientation={index === 1 ? 'landscape' : 'portrait'} tone={index === 0 ? 'clay' : index === 1 ? 'olive' : 'tobacco'} />
+          </a>
+        </article>
       ))}
     </div>
   </section>
-
-  <script>
-    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-button');
-    const projectCards = document.querySelectorAll<HTMLElement>('.project-card');
-    const status = document.querySelector<HTMLElement>('#filter-status');
-
-    filterButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const selectedCategory = button.dataset.filter ?? 'All';
-        let visibleCount = 0;
-
-        filterButtons.forEach((item) => {
-          const active = item === button;
-          item.setAttribute('aria-pressed', String(active));
-          item.classList.toggle('text-ink', active);
-          item.classList.toggle('underline', active);
-        });
-
-        projectCards.forEach((card) => {
-          const cardCategories = card.dataset.categories?.split(',') ?? [];
-          const visible = selectedCategory === 'All' || cardCategories.includes(selectedCategory);
-          card.parentElement?.toggleAttribute('hidden', !visible);
-          if (visible) visibleCount += 1;
-        });
-
-        if (status) status.textContent = `${visibleCount} project${visibleCount === 1 ? '' : 's'} shown for ${selectedCategory}.`;
-      });
-    });
-  </script>
 </BaseLayout>

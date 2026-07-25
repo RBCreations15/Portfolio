@@ -6,95 +6,94 @@ import ContactCta from '../components/ContactCta.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { services } from '../data/services';
-import { siteData } from '../data/site';
+import { coreServices } from '../data/services';
+import { homeCopy, siteData } from '../data/site';
 import { withBase } from '../lib/paths';
 
 const featuredProjects = (await getCollection('projects'))
   .filter((project) => project.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
+
+const archiveEntries = (await getCollection('archive')).sort((a, b) => a.data.order - b.data.order).slice(0, 6);
 ---
 
 <BaseLayout>
-  <section class="site-container grid min-h-[calc(100svh-5rem)] grid-rows-[1fr_auto] py-8 lg:min-h-[calc(100svh-6rem)] lg:py-12">
-    <div class="grid items-center gap-12 py-10 lg:grid-cols-12 lg:py-16">
-      <div class="relative z-10 lg:col-span-9">
-        <p class="eyebrow mb-7 text-clay">Multidisciplinary creative practice</p>
-        <h1 class="display-title">
-          Ideas with <em class="font-normal text-clay">feeling,</em><br />made with intent.
-        </h1>
-      </div>
-      <div class="lg:col-span-3 lg:self-end lg:pb-3">
-        <p class="body-large m-0 max-w-lg">{siteData.title}</p>
-        <p class="mt-4 text-sm placeholder-copy">[Placeholder — replace with an approved positioning statement in your voice.]</p>
+  <section class="site-container grid min-h-[calc(100svh-5rem)] grid-rows-[1fr_auto] py-8 lg:min-h-[calc(100svh-6rem)] lg:py-10">
+    <div class="grid items-center gap-10 py-10 lg:grid-cols-12 lg:py-14">
+      <div class="relative z-10 lg:col-span-8">
+        <p class="eyebrow mb-7 text-clay">{homeCopy.descriptor}</p>
+        <h1 class="display-title">{siteData.name}</h1>
+        <p class="body-large mt-7 max-w-2xl">{homeCopy.supporting}</p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href={withBase('/work/')}>View work</ButtonLink>
-          <ButtonLink href={withBase('/contact/')} variant="outline">Start a project</ButtonLink>
+          <ButtonLink href={withBase('/work/')}>View Work</ButtonLink>
+          <ButtonLink href={withBase('/contact/')} variant="outline">Get in Touch</ButtonLink>
         </div>
+      </div>
+      <div class="editorial-panel lg:col-span-4 lg:self-stretch">
+        <ImagePlaceholder label="Editorial art direction panel" alt="Decorative editorial placeholder establishing the portfolio visual tone" orientation="portrait" tone="olive" eager />
       </div>
     </div>
     <div class="grid grid-cols-2 gap-4 border-t border-line pt-4 text-[0.62rem] uppercase tracking-[0.13em] text-muted sm:grid-cols-3">
-      <p class="m-0">Creative direction · strategy · image-making</p>
+      <p class="m-0">Independent creative practice</p>
       <p class="m-0 sm:text-center">{siteData.location}</p>
-      <p class="m-0 hidden text-right sm:block">Scroll to explore ↓</p>
+      <p class="m-0 hidden text-right sm:block">Visual archive · 2026</p>
     </div>
   </section>
 
   <section class="site-container section-space">
     <SectionHeader
-      eyebrow="Selected work"
-      title="A developing archive of considered work."
-      description="Every project below is currently a clearly marked structural placeholder, ready for approved imagery, details, and credits."
+      eyebrow="Selected Work"
+      title="Brand worlds, campaigns, images, and studies."
+      description="Project pages are intentionally structured now and ready for approved imagery, context, roles, and credits."
     />
     <div class="mt-16 space-y-20 lg:mt-24 lg:space-y-28">
       {featuredProjects.map((project, index) => <ProjectCard project={project} index={index} large />)}
     </div>
-    <div class="mt-12 text-right">
-      <a class="text-link" href={withBase('/work/')}>View all work</a>
-    </div>
   </section>
 
   <section class="bg-ink text-paper">
-    <div class="site-container section-space">
-      <SectionHeader eyebrow="Capabilities" title="Across the big idea and the precise detail." />
-      <div class="mt-16 grid border-t border-paper/25 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service) => (
-          <a
-            href={`${withBase('/services/')}#service-${service.number}`}
-            class="group min-h-52 border-b border-paper/25 p-6 no-underline transition-colors hover:bg-paper hover:text-ink md:border-r lg:min-h-64"
-          >
-            <p class="eyebrow m-0 text-current/60">{service.number}</p>
-            <h3 class="mt-14 max-w-[8ch] font-display text-3xl font-normal leading-none tracking-[-0.04em] lg:mt-20 lg:text-4xl">{service.title}</h3>
-          </a>
-        ))}
+    <div class="site-container section-space grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-4">
+        <p class="eyebrow mb-6 text-paper/55">About Preview</p>
+        <h2 class="m-0 font-display text-[clamp(3rem,6vw,6rem)] font-normal leading-[0.96] tracking-[-0.04em]">
+          Felt before it is explained.
+        </h2>
+      </div>
+      <div class="md:col-span-7 md:col-start-6">
+        <div class="space-y-5 text-lg leading-relaxed text-paper/75">
+          {homeCopy.aboutPreview.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <a class="text-link mt-8" href={withBase('/about/')}>Read About</a>
       </div>
     </div>
   </section>
 
   <section class="site-container section-space">
-    <div class="grid gap-12 md:grid-cols-12 md:items-center">
-      <div class="reveal md:col-span-5">
-        <ImagePlaceholder label="Portrait or studio image" alt="Placeholder for an approved portrait of the portfolio owner" orientation="portrait" tone="clay" />
-      </div>
-      <div class="reveal md:col-span-6 md:col-start-7">
-        <p class="eyebrow mb-5 text-clay">About the practice</p>
-        <h2 class="m-0 font-display text-[clamp(3rem,6vw,6rem)] font-normal leading-[0.94] tracking-[-0.05em]">
-          Curious across disciplines. Exacting about the whole.
-        </h2>
-        <p class="body-large mt-8 placeholder-copy">[Placeholder — add a short personal introduction about your perspective, background, and the thread connecting your work.]</p>
-        <a class="text-link mt-8" href={withBase('/about/')}>More about me</a>
-      </div>
-    </div>
+    <SectionHeader eyebrow="Services Preview" title="A practical index for making atmosphere." />
+    <ol class="mt-14 grid list-none border-t border-line p-0 md:grid-cols-2 lg:grid-cols-7">
+      {coreServices.map((service, index) => (
+        <li class="min-h-40 border-b border-line p-5 md:border-r">
+          <span class="eyebrow text-clay">{String(index + 1).padStart(2, '0')}</span>
+          <p class="mt-12 font-display text-2xl leading-none">{service}</p>
+        </li>
+      ))}
+    </ol>
+    <a class="text-link mt-8" href={withBase('/services/')}>View Services</a>
   </section>
 
-  <section class="border-y border-line">
-    <div class="site-container section-space grid gap-10 md:grid-cols-12">
-      <p class="eyebrow m-0 text-clay md:col-span-3">Working philosophy</p>
-      <blockquote class="m-0 md:col-span-8 md:col-start-5">
-        <p class="m-0 font-display text-[clamp(2.5rem,5vw,5.5rem)] leading-[1.02] tracking-[-0.045em]">
-          “<span class="placeholder-copy">[Placeholder — add an original, approved statement about how you see and make creative work.]</span>”
-        </p>
-      </blockquote>
+  <section class="bg-paper-deep">
+    <div class="site-container section-space">
+      <SectionHeader eyebrow="Archive Preview" title="Studies, notes, materials, places." />
+      <div class="mt-14 grid gap-5 md:grid-cols-3">
+        {archiveEntries.map((entry, index) => (
+          <a href={withBase(`/archive/${entry.id}/`)} class="group border-t border-line py-5 no-underline" aria-label={`Open archive entry: ${entry.data.title}`}>
+            <p class="eyebrow mb-3 text-muted">{String(index + 1).padStart(2, '0')} · {entry.data.category}</p>
+            <h3 class="m-0 font-display text-3xl font-normal leading-none">{entry.data.title}</h3>
+            <p class="mt-4 text-sm text-muted">{entry.data.summary}</p>
+          </a>
+        ))}
+      </div>
+      <a class="text-link mt-10" href={withBase('/archive/')}>Open Archive</a>
     </div>
   </section>
 
