@@ -10,12 +10,26 @@ const { href, variant = 'solid' } = Astro.props;
 <a
   href={href}
   data-variant={variant}
-  class="button-link inline-flex min-h-12 items-center justify-center border px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] no-underline transition-colors duration-300"
+  class="button-link inline-flex min-h-12 items-center justify-center border px-7 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] no-underline"
 >
   <slot />
 </a>
 
 <style>
+  .button-link {
+    border-width: 1px;
+    line-height: 1;
+    transition:
+      color 260ms var(--ease-out),
+      background-color 260ms var(--ease-out),
+      border-color 260ms var(--ease-out),
+      transform 260ms var(--ease-out);
+  }
+
+  .button-link:hover {
+    transform: translateY(-1px);
+  }
+
   .button-link[data-variant="solid"] {
     border-color: var(--color-ink);
     color: var(--color-paper);
@@ -23,8 +37,8 @@ const { href, variant = 'solid' } = Astro.props;
   }
 
   .button-link[data-variant="solid"]:hover {
-    border-color: var(--color-clay);
-    background: var(--color-clay);
+    border-color: var(--color-clay-dark);
+    background: var(--color-clay-dark);
   }
 
   .button-link[data-variant="outline"] {
@@ -47,5 +61,16 @@ const { href, variant = 'solid' } = Astro.props;
   .button-link[data-variant="light"]:hover {
     color: var(--color-paper);
     background: transparent;
+  }
+
+  .button-link:focus-visible {
+    outline: 2px solid var(--color-clay);
+    outline-offset: 5px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button-link:hover {
+      transform: none;
+    }
   }
 </style>

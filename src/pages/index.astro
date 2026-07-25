@@ -18,22 +18,22 @@ const archiveEntries = (await getCollection('archive')).sort((a, b) => a.data.or
 ---
 
 <BaseLayout>
-  <section class="site-container grid min-h-[calc(100svh-5rem)] grid-rows-[1fr_auto] py-8 lg:min-h-[calc(100svh-6rem)] lg:py-10">
-    <div class="grid items-center gap-10 py-10 lg:grid-cols-12 lg:py-14">
-      <div class="relative z-10 lg:col-span-8">
-        <p class="eyebrow mb-7 text-clay">{homeCopy.descriptor}</p>
-        <h1 class="display-title">{siteData.name}</h1>
-        <p class="body-large mt-7 max-w-2xl">{homeCopy.supporting}</p>
-        <div class="mt-8 flex flex-wrap gap-3">
+  <section class="home-hero site-container grid min-h-[calc(100svh-5rem)] grid-rows-[1fr_auto] py-10 lg:min-h-[calc(100svh-6rem)] lg:py-14">
+    <div class="home-hero__layout grid items-center gap-12 py-12 lg:grid-cols-12 lg:py-16">
+      <div class="home-hero__copy relative z-10 lg:col-span-8">
+        <p class="home-hero__eyebrow eyebrow text-clay">{homeCopy.descriptor}</p>
+        <h1 class="home-hero__title display-title">{siteData.name}</h1>
+        <p class="home-hero__support body-large max-w-2xl">{homeCopy.supporting}</p>
+        <div class="home-hero__actions flex flex-wrap gap-4">
           <ButtonLink href={withBase('/work/')}>View Work</ButtonLink>
           <ButtonLink href={withBase('/contact/')} variant="outline">Get in Touch</ButtonLink>
         </div>
       </div>
-      <div class="editorial-panel lg:col-span-4 lg:self-stretch">
-        <ImagePlaceholder label="Editorial art direction panel" alt="Decorative editorial placeholder establishing the portfolio visual tone" orientation="portrait" tone="olive" eager />
+      <div class="home-hero__panel editorial-panel lg:col-span-4 lg:self-stretch">
+        <ImagePlaceholder label="Editorial art direction panel" alt="Decorative editorial placeholder establishing the portfolio visual tone" orientation="portrait" tone="olive" treatment="editorial" eager />
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-4 border-t border-line pt-4 text-[0.62rem] uppercase tracking-[0.13em] text-muted sm:grid-cols-3">
+    <div class="home-hero__meta grid grid-cols-2 gap-4 border-t border-line pt-5 text-[0.62rem] uppercase tracking-[0.13em] text-muted sm:grid-cols-3">
       <p class="m-0">Independent creative practice</p>
       <p class="m-0 sm:text-center">{siteData.location}</p>
       <p class="m-0 hidden text-right sm:block">Visual archive · 2026</p>
